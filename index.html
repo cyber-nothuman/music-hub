@@ -3,28 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎵 Music Hub</title>
+    <title>Music Hub</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #000; color: #fff; }
-        header { background: #111; padding: 20px; text-align: center; }
-        h1 { color: #ff006e; font-size: 36px; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .card { background: #222; border: 2px solid #ff006e; padding: 20px; border-radius: 10px; text-align: center; cursor: pointer; }
-        .card:hover { background: #ff006e; }
-        .icon { font-size: 40px; }
-        footer { background: #111; padding: 20px; text-align: center; margin-top: 50px; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #000 0%, #1a1a2e 100%);
+            color: #fff; 
+            min-height: 100vh;
+        }
+        header { 
+            background: rgba(0,0,0,0.8);
+            padding: 20px; 
+            text-align: center; 
+            border-bottom: 3px solid #ff006e;
+        }
+        h1 { color: #ff006e; font-size: 48px; margin: 10px 0; }
+        p { opacity: 0.8; font-size: 18px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        h2 { color: #ff006e; font-size: 32px; margin: 40px 0 20px 0; border-left: 5px solid #ff006e; padding-left: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .card { 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #ff006e; 
+            padding: 25px; 
+            border-radius: 10px; 
+            text-align: center; 
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .card:hover { 
+            background: #ff006e;
+            transform: scale(1.05);
+        }
+        .card:hover h3 { color: #000; }
+        .icon { font-size: 50px; margin-bottom: 10px; }
+        .card h3 { margin-top: 10px; }
+        footer { 
+            background: rgba(0,0,0,0.8);
+            padding: 30px 20px; 
+            text-align: center; 
+            margin-top: 50px;
+            border-top: 3px solid #ff006e;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>🎵 Music Hub</h1>
-        <p>Stream, Discover, Enjoy</p>
+        <h1>🎵 MUSIC HUB</h1>
+        <p>Stream, Discover & Enjoy Music</p>
     </header>
     
     <div class="container">
-        <h2 style="margin: 30px 0; color: #ff006e;">Trending Now</h2>
+        <h2>🔥 Trending Genres</h2>
         <div class="grid">
             <div class="card"><div class="icon">🎤</div><h3>Pop Hits</h3></div>
             <div class="card"><div class="icon">🎸</div><h3>Rock</h3></div>
@@ -34,36 +65,33 @@
             <div class="card"><div class="icon">🎺</div><h3>Soul</h3></div>
             <div class="card"><div class="icon">💿</div><h3>R&B</h3></div>
             <div class="card"><div class="icon">🎻</div><h3>Classical</h3></div>
-            <div class="card"><div class="icon">🌍</div><h3>World</h3></div>
-            <div class="card"><div class="icon">😎</div><h3>Indie</h3></div>
-            <div class="card"><div class="icon">💃</div><h3>Dance</h3></div>
-            <div class="card"><div class="icon">😴</div><h3>Lofi</h3></div>
         </div>
 
-        <h2 style="margin: 50px 0 30px 0; color: #ff006e;">Playlists</h2>
+        <h2>📻 Playlists</h2>
         <div class="grid">
-            <div class="card"><div class="icon">🌅</div><h3>Morning</h3></div>
-            <div class="card"><div class="icon">💪</div><h3>Workout</h3></div>
-            <div class="card"><div class="icon">🌙</div><h3>Night</h3></div>
-            <div class="card"><div class="icon">💔</div><h3>Chill</h3></div>
-            <div class="card"><div class="icon">🎉</div><h3>Party</h3></div>
-            <div class="card"><div class="icon">📚</div><h3>Study</h3></div>
+            <div class="card"><div class="icon">🌅</div><h3>Morning Vibes</h3></div>
+            <div class="card"><div class="icon">💪</div><h3>Workout Mix</h3></div>
+            <div class="card"><div class="icon">🌙</div><h3>Night Mode</h3></div>
+            <div class="card"><div class="icon">💔</div><h3>Chill Out</h3></div>
+            <div class="card"><div class="icon">🎉</div><h3>Party Time</h3></div>
+            <div class="card"><div class="icon">📚</div><h3>Study Focus</h3></div>
         </div>
 
-        <h2 style="margin: 50px 0 30px 0; color: #ff006e;">Artists</h2>
+        <h2>⭐ Top Artists</h2>
         <div class="grid">
             <div class="card"><div class="icon">👨‍🎤</div><h3>The Weeknd</h3></div>
             <div class="card"><div class="icon">👩‍🎤</div><h3>Ariana Grande</h3></div>
             <div class="card"><div class="icon">🎤</div><h3>Drake</h3></div>
             <div class="card"><div class="icon">👨‍🎸</div><h3>Ed Sheeran</h3></div>
             <div class="card"><div class="icon">👸</div><h3>Billie Eilish</h3></div>
-            <div class="card"><div class="icon">🎸</div><h3>Post Malone</h3></div>
+            <div class="card"><div class="icon">💎</div><h3>Beyoncé</h3></div>
         </div>
     </div>
 
     <footer>
         <h3>🎵 Music Hub</h3>
-        <p>Your music, Your way | Made with 💜</p>
+        <p>Your music, your way | Made with 💜</p>
+        <p>&copy; 2026 Music Hub. All rights reserved.</p>
     </footer>
 </body>
 </html>
