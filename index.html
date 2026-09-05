@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Hub - Stream Music Online</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #ff006e;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff006e;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            bottom: -80px;
+            left: -80px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 20px;
+        }
+
+        .section h2 {
+            font-size: 40px;
+            margin-bottom: 50px;
+            text-align: center;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .music-card {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1) 0%, rgba(131, 56, 236, 0.1) 100%);
+            border: 1px solid #ff006e;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .music-card:hover::before {
+            left: 100%;
+        }
+
+        .music-card:hover {
+            transform: translateY(-15px);
+            border-color: #8338ec;
+            box-shadow: 0 20px 60px rgba(131, 56, 236, 0.3);
+        }
+
+        .music-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .music-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .music-card p {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
+        }
+
+        .featured {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.05) 0%, rgba(131, 56, 236, 0.05) 100%);
+            border: 2px solid #ff006e;
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .featured h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ff006e;
+        }
+
+        .featured p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .category-section {
+            margin-bottom: 80px;
+        }
+
+        .category-title {
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #ff006e;
+            border-left: 5px solid #8338ec;
+            padding-left: 20px;
+        }
+
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .playlist-card {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            border: 1px solid #ff006e;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .playlist-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.2);
+            border-color: #8338ec;
+        }
+
+        .playlist-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .playlist-card h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .playlist-card span {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid #ff006e;
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .footer-links a {
+            color: #ff006e;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #8338ec;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ff006e;
+            border-radius: 50%;
+            color: #ff006e;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #ff006e;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .music-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 20px;
+            }
+
+            nav {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .section h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .music-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+            }
+
+            .music-card {
+                padding: 20px;
+            }
+
+            .music-icon {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">🎵 Music Hub</div>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#trending">Trending</a>
+                <a href="#playlists">Playlists</a>
+                <a href="#artists">Artists</a>
+                <a href="#genres">Genres</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>🎵 Ultimate Music Hub</h1>
+            <p>Stream millions of songs, discover new artists, and create your perfect playlists</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="section" id="trending">
+            <h2>🔥 Trending Now</h2>
+            <div class="music-grid">
+                <div class="music-card">
+                    <div class="music-icon">🎤</div>
+                    <h3>Pop Hits</h3>
+                    <p>Latest Pop Anthems</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">🎸</div>
+                    <h3>Rock Legends</h3>
+                    <p>Classic Rock Vibes</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">🎹</div>
+                    <h3>Jazz Classics</h3>
+                    <p>Smooth Jazz Collection</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">🎧</div>
+                    <h3>Hip-Hop Beats</h3>
+                    <p>Urban Music Culture</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">🌊</div>
+                    <h3>Electronic Vibes</h3>
+                    <p>EDM & Synthwave</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">🎺</div>
+                    <h3>Soul & Funk</h3>
+                    <p>Groovy Rhythms</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">💿</div>
+                    <h3>R&B Vibes</h3>
+                    <p>Smooth R&B Tracks</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">🎻</div>
+                    <h3>Classical</h3>
+                    <p>Orchestral Masterpieces</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">🌍</div>
+                    <h3>World Music</h3>
+                    <p>Global Sounds</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">😎</div>
+                    <h3>Indie Tracks</h3>
+                    <p>Underground Artists</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">💃</div>
+                    <h3>Dance Hits</h3>
+                    <p>Club Bangers</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+                <div class="music-card">
+                    <div class="music-icon">😴</div>
+                    <h3>Chill Lofi</h3>
+                    <p>Relaxing Beats</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured">
+            <h3>🌟 Featured Artists</h3>
+            <p>Discover amazing music from top artists around the world</p>
+            <button class="play-btn">Explore More</button>
+        </section>
+
+        <section class="section" id="playlists">
+            <div class="category-section">
+                <div class="category-title">📻 Curated Playlists</div>
+                <div class="playlist-grid">
+                    <div class="playlist-card">
+                        <div class="playlist-icon">🌅</div>
+                        <h4>Morning Vibes</h4>
+                        <span>Start your day right</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">💪</div>
+                        <h4>Workout Mix</h4>
+                        <span>High energy beats</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">🌙</div>
+                        <h4>Late Night</h4>
+                        <span>Night mode essentials</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">💔</div>
+                        <h4>Heartbreak</h4>
+                        <span>Emotional songs</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">🎉</div>
+                        <h4>Party Mode</h4>
+                        <span>Let's celebrate</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">📚</div>
+                        <h4>Study Focus</h4>
+                        <span>Concentration boost</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">🚗</div>
+                        <h4>Road Trip</h4>
+                        <span>Long drive playlist</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">☕</div>
+                        <h4>Cafe Vibes</h4>
+                        <span>Cozy ambiance</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">💕</div>
+                        <h4>Love Songs</h4>
+                        <span>Romance collection</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">🎭</div>
+                        <h4>Indie Gems</h4>
+                        <span>Hidden treasures</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">🎪</div>
+                        <h4>Festival Mix</h4>
+                        <span>Festival favorites</span>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-icon">🌴</div>
+                        <h4>Summer Hits</h4>
+                        <span>Seasonal vibes</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="artists">
+            <div class="category-section">
+                <div class="category-title">⭐ Popular Artists</div>
+                <div class="music-grid">
+                    <div class="music-card">
+                        <div class="music-icon">👨‍🎤</div>
+                        <h3>The Weeknd</h3>
+                        <p>Pop/R&B Artist</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">👩‍🎤</div>
+                        <h3>Ariana Grande</h3>
+                        <p>Pop Sensation</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎤</div>
+                        <h3>Drake</h3>
+                        <p>Hip-Hop King</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">👨‍🎸</div>
+                        <h3>Ed Sheeran</h3>
+                        <p>Singer-Songwriter</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">👸</div>
+                        <h3>Billie Eilish</h3>
+                        <p>Alternative Pop</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎹</div>
+                        <h3>The Weeknd</h3>
+                        <p>Electronic Pop</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎸</div>
+                        <h3>Post Malone</h3>
+                        <p>Hip-Hop/Pop</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">💎</div>
+                        <h3>Beyoncé</h3>
+                        <p>R&B Legend</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🌟</div>
+                        <h3>Taylor Swift</h3>
+                        <p>Pop Queen</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎧</div>
+                        <h3>Dua Lipa</h3>
+                        <p>Pop Sensation</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🔥</div>
+                        <h3>Weeknd</h3>
+                        <p>Dark Pop</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">✨</div>
+                        <h3>Olivia Rodrigo</h3>
+                        <p>Pop/Alt</p>
+                        <button class="play-btn">Follow</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="genres">
+            <div class="category-section">
+                <div class="category-title">🎵 Explore Genres</div>
+                <div class="music-grid">
+                    <div class="music-card">
+                        <div class="music-icon">🎤</div>
+                        <h3>Pop</h3>
+                        <p>Mainstream Hits</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎸</div>
+                        <h3>Rock</h3>
+                        <p>Electric Sound</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎺</div>
+                        <h3>Jazz</h3>
+                        <p>Smooth & Improvised</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎧</div>
+                        <h3>Hip-Hop</h3>
+                        <p>Urban Culture</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🌊</div>
+                        <h3>Electronic</h3>
+                        <p>Synthetic Beats</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">💫</div>
+                        <h3>Soul</h3>
+                        <p>Emotional Depth</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎻</div>
+                        <h3>Classical</h3>
+                        <p>Orchestral</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🌍</div>
+                        <h3>World</h3>
+                        <p>Global Sounds</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">💃</div>
+                        <h3>Dance</h3>
+                        <p>High Energy</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">😴</div>
+                        <h3>Ambient</h3>
+                        <p>Atmospheric</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎬</div>
+                        <h3>Soundtrack</h3>
+                        <p>Film & TV</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                    <div class="music-card">
+                        <div class="music-icon">🎪</div>
+                        <h3>Musical</h3>
+                        <p>Theater Music</p>
+                        <button class="play-btn">Browse</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>🎵 Music Hub</h3>
+            <p>Stream unlimited music, discover new artists, and enjoy the soundtrack of your life</p>
+            
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#trending">Trending</a>
+                <a href="#playlists">Playlists</a>
+                <a href="#artists">Artists</a>
+                <a href="#genres">Genres</a>
+            </div>
+
+            <div class="social-links">
+                <a href="#" title="Facebook">f</a>
+                <a href="#" title="Twitter">𝕏</a>
+                <a href="#" title="Instagram">📷</a>
+                <a href="#" title="YouTube">▶</a>
+                <a href="#" title="Spotify">🎵</a>
+            </div>
+
+            <p style="margin-top: 30px; opacity: 0.7;">&copy; 2026 Music Hub. All rights reserved. | Made with 🎵</p>
+        </div>
+    </footer>
+</body>
+</html>
